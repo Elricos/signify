@@ -198,7 +198,7 @@ class SignedPEFile(object):
 
         :rtype: signify.fingerprinter.AuthenticodeFingerprinter
         """
-        from .fingerprinter import AuthenticodeFingerprinter
+        from signify.fingerprinter import AuthenticodeFingerprinter
         return AuthenticodeFingerprinter(self.file)
 
     @property
@@ -210,7 +210,7 @@ class SignedPEFile(object):
         :return: iterator of signify.authenticode.SignedData
         """
 
-        from .authenticode import SignedData
+        from signify.authenticode import SignedData
 
         found = False
         for certificate in self._parse_cert_table():

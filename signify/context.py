@@ -12,10 +12,12 @@ logger = logging.getLogger(__name__)
 class CertificateStore(list):
     """A list of :class:`Certificate` objects."""
 
-    def __init__(self, *args, trusted=False, **kwargs):
+    def __init__(self, *args, **kwargs):
         """
         :param bool trusted: If true, all certificates that are appended to this structure are set to trusted.
         """
+        # set trusted to False if missing
+        trusted = kwargs.get('trusted', False)
         super().__init__(*args, **kwargs)
         self.trusted = trusted
 
@@ -60,9 +62,7 @@ class FileSystemCertificateStore(CertificateStore):
 
 
 class VerificationContext(object):
-    def __init__(self, *stores, timestamp=None, key_usages=None, extended_key_usages=None, optional_eku=True,
-                 allow_legacy=True, revocation_mode='soft-fail', allow_fetching=False, fetch_timeout=30,
-                 crls=None, ocsps=None):
+    def __init__(self, *stores, **kwargs):
         """A context holding properties about the verification of a signature or certificate.
 
         :param Iterable[CertificateStore] stores: A list of CertificateStore objects that contain certificates
@@ -87,6 +87,16 @@ class VerificationContext(object):
         :param Iterable[asn1crypto.ocsp.OCSPResponse] ocsps: List of :class:`asn1crypto.ocsp.OCSPResponse` objects to
             aid in verifying revocation statuses.
         """
+        timestamp = kwargs.get(timestamp, None)
+        key_usages = kwargs.get(key_usages, None)
+        extended_key_usages = kwargs.get(extended_key_usages, None) 
+        optional_eku = kwargs.get(optional_eku, True) 
+        allow_legacy = kwargs.get(allow_legacy, True)  
+        revocation_mode = kwargs.get(revocation_mode, 'soft-fail') 
+        allow_fetching = kwargs.get(allow_fetching, False)  
+        fetch_timeout = kwargs.get(fetch_timeout, 30) 
+        crls = kwargs.get(crls, None) 
+        ocsps = kwargs.get(ocsps, None) 
 
         self.stores = list(stores)
         self.timestamp = timestamp
