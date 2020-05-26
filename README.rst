@@ -1,3 +1,6 @@
+This attempts to revert the code to Python 2 for use with Cuckoo Sandbox as a module.
+Currently has breaking bugs that need to be resolved, and is on hold.
+=======
 Signify
 =======
 .. image:: https://travis-ci.org/ralphje/signify.svg?branch=master
