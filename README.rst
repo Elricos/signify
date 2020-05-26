@@ -1,14 +1,8 @@
+Signify
+=======
 This attempts to revert the code to Python 2 for use with Cuckoo Sandbox as a module.
 Currently has breaking bugs that need to be resolved, and is on hold.
 =======
-Signify
-=======
-.. image:: https://travis-ci.org/ralphje/signify.svg?branch=master
-    :target: https://travis-ci.org/ralphje/signify
-.. image:: https://codecov.io/gh/ralphje/signify/branch/master/graph/badge.svg
-    :target: https://codecov.io/gh/ralphje/signify
-.. image:: https://readthedocs.org/projects/signify/badge/?version=latest
-    :target: http://signify.readthedocs.io/en/latest/?badge=latest
 
 Signify, a portmanteau of *signature* and *verify*, is a Python module that computes and validates signatures.
 At this point it is mostly a library that verifies PE Authenticode-signed binaries.
@@ -21,14 +15,11 @@ This module is compatible with Python 3.5+ and does not support Python 2.
 
 Installation
 ------------
-Installation is very simple::
+Clone and Run with::
 
-    pip install signify
-
-Documentation
--------------
-Documentation is available at http://signify.readthedocs.io/en/latest/ or in the docs/ directory.
+    python test.py [file dir]
 
 Thanks
 ------
 Thanks to Germano Caronni (caronni@google.com, gec@acm.org) for writing the basis of this module.
+And to ralphje for writing the signify module,
