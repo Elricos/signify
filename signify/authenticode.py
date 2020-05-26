@@ -24,26 +24,36 @@
 
 .. _Authenticode_PE: http://download.microsoft.com/download/9/c/5/9c5b2167-8017-4bae-9fde-d599bac8184a/Authenticode_PE.docx
 """
+try:
+    import logging
+    import os
 
-import logging
-import pathlib
+    from pyasn1.codec.ber import decoder as ber_decoder
+    from pyasn1.codec.der import decoder as der_decoder
+    from pyasn1_modules import rfc3161, rfc2315, rfc5652
 
-from pyasn1.codec.ber import decoder as ber_decoder
-from pyasn1.codec.der import decoder as der_decoder
-from pyasn1_modules import rfc3161, rfc2315, rfc5652
-
-from signify.asn1 import guarded_ber_decode, guarded_der_decode, pkcs7
-from signify.asn1.helpers import accuracy_to_python
-from signify.certificates import Certificate, CertificateName
-from signify.context import CertificateStore, VerificationContext, FileSystemCertificateStore
-from signify.exceptions import AuthenticodeParseError, AuthenticodeVerificationError
-from signify.signerinfo import _get_digest_algorithm, SignerInfo, CounterSignerInfo
-from signify import asn1
+    from signify.asn1 import guarded_ber_decode, guarded_der_decode, pkcs7
+    from signify.asn1.helpers import accuracy_to_python
+    from signify.certificates import Certificate, CertificateName
+    from signify.context import CertificateStore, VerificationContext, FileSystemCertificateStore
+    from signify.exceptions import AuthenticodeParseError, AuthenticodeVerificationError
+    from signify.signerinfo import _get_digest_algorithm, SignerInfo, CounterSignerInfo
+    from signify import asn1
+except ImportError as e:
+    print("Import error in authenticode")
+    print(e.__class__.__name__ + ": " + e.message)
+except Exception as e:
+    print(e)
+    print(e.__class__.__name__ + ": " + e.message)
 
 logger = logging.getLogger(__name__)
 
-CERTIFICATE_LOCATION = pathlib.Path(__file__).resolve().parent / "certs" / "authenticode"
-TRUSTED_CERTIFICATE_STORE = FileSystemCertificateStore(location=CERTIFICATE_LOCATION, trusted=True)
+try:
+    CERTIFICATE_LOCATION = os.path.join(os.path.dirname(os.path.relpath(__file__)), "certs", "authenticode")
+    TRUSTED_CERTIFICATE_STORE = FileSystemCertificateStore(location=CERTIFICATE_LOCATION, trusted=True)
+except Exception as e:
+    print("Error setting cert store", e)
+    print(e.__class__.__name__ + ": " + e.message)
 
 
 class AuthenticodeCounterSignerInfo(CounterSignerInfo):
@@ -60,7 +70,7 @@ class AuthenticodeSignerInfo(SignerInfo):
     _required_authenticated_attributes = (rfc2315.ContentType, rfc2315.Digest)
 
     def _parse(self):
-        super()._parse()
+        super(AuthenticodeSignerInfo, self)._parse()
 
         # - Retrieve object from SpcSpOpusInfo from the authenticated attributes (for normal signer)
         self.program_name = self.more_info = None

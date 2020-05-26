@@ -29,15 +29,18 @@ The actual parsing of this certificate is perfomed by :mod:`signify.authenticode
 .. _PECOFF: http://www.microsoft.com/whdc/system/platform/firmware/PECOFF.mspx
 """
 
-import collections
-import hashlib
-import logging
-import os
-import struct
-import sys
+try:
+    import collections
+    import hashlib
+    import logging
+    import os
+    import struct
+    import sys
 
-from signify.exceptions import AuthenticodeVerificationError, SignedPEParseError
-
+    from signify.exceptions import AuthenticodeVerificationError, SignedPEParseError
+except:
+    print("Import error in signed_pe")
+    
 logger = logging.getLogger(__name__)
 
 RelRange = collections.namedtuple('RelRange', 'start length')

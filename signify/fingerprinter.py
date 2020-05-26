@@ -20,14 +20,17 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-import collections
-import hashlib
-import os
-import sys
-import logging
-import binascii
+try:
+    import collections
+    import hashlib
+    import os
+    import sys
+    import logging
+    import binascii
 
-from signify.signed_pe import SignedPEFile
+    from signify.signed_pe import SignedPEFile
+except:
+    print("import error from fingerprinter")
 
 logger = logging.getLogger(__name__)
 

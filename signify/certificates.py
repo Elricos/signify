@@ -1,19 +1,21 @@
-import logging
-import re
+try:
+    import logging
+    import re
 
-import asn1crypto.pem
-import asn1crypto.x509
-from oscrypto import asymmetric
-from pyasn1.codec.der import encoder as der_encoder
-from pyasn1.codec.der import decoder as der_decoder
-from pyasn1.codec.ber import decoder as ber_decoder
-from pyasn1_modules import rfc5652, rfc5280, rfc2315
+    import asn1crypto.pem
+    import asn1crypto.x509
+    from oscrypto import asymmetric
+    from pyasn1.codec.der import encoder as der_encoder
+    from pyasn1.codec.der import decoder as der_decoder
+    from pyasn1.codec.ber import decoder as ber_decoder
+    from pyasn1_modules import rfc5652, rfc5280, rfc2315
 
-from . import asn1
-from .asn1 import oids
-from .asn1.helpers import time_to_python
-from .exceptions import CertificateVerificationError
-
+    from signify import asn1
+    from signify.asn1 import oids
+    from signify.asn1.helpers import time_to_python
+    from signify.exceptions import CertificateVerificationError
+except:
+    print("Import error in certificates")
 logger = logging.getLogger(__name__)
 
 

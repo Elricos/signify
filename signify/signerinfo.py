@@ -8,7 +8,7 @@ from pyasn1_modules import rfc5652, rfc2315
 from signify.asn1 import guarded_ber_decode, pkcs7
 from signify.exceptions import VerificationError, SignerInfoParseError, \
     SignerInfoVerificationError, ParseError
-from signify import asn1, 
+from signify import asn1
 from signify.__init__ import _print_type
 from signify.asn1.helpers import time_to_python
 from signify.certificates import CertificateName
@@ -265,7 +265,8 @@ class SignerInfo(object):
         """
 
         for certificate in context.find_certificates(issuer=self.issuer, serial_number=self.serial_number):
-            yield from context.potential_chains(certificate)
+            for item in context.potential_chains(certificate):
+                yield item
 
 
 class CounterSignerInfo(SignerInfo):
